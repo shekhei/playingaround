@@ -5,9 +5,14 @@
 <body>
 <script src="./cachehitobj.js"></script>
 <script>
-function bench(name, func) {
+var options = {prof:false};
+function bench(name, func, prof) {
+	prof = prof === undefined ? options.prof : prof;
+
 	var timer = new Date();
+	if ( prof ) { console.profile(name);}
 	func();
+	if ( prof ) { console.profileEnd(name);}
 	console.log(name, (new Date())-timer);
 }
 obj1 = {0:"1",1:"1",2:"1",3:"1",4:"1",5:"1"}, arr1 = [], i = 0; l = 100000;
@@ -38,36 +43,36 @@ for ( i = 0; i < l; i++ ) {
 bench('cache-miss-obj', function(){
 
 	for ( i = 0; i < l; i++ ) {
-		arr1[i]['0'] = "1";
-		arr1[i]['1'] = "2";
-		arr1[i]['2'] = "1";
-		arr1[i]['3'] = "2";
-		arr1[i]['4'] = "1";
-		arr1[i]['5'] = "2";
+		arr1[i][0] = "1";
+		arr1[i][1] = "2";
+		arr1[i][2] = "1";
+		arr1[i][3] = "2";
+		arr1[i][4] = "1";
+		arr1[i][5] = "2";
 	}
 });
 bench('cache-miss-local-obj', function(){
 
 	for ( i = 0; i < l; i++ ) {
 		var obj = arr1[i];
-		obj['0'] = "1";
-		obj['1'] = "2";
-		obj['2'] = "1";
-		obj['3'] = "2";
-		obj['4'] = "1";
-		obj['5'] = "2";
+		obj[0] = "1";
+		obj[1] = "2";
+		obj[2] = "1";
+		obj[3] = "2";
+		obj[4] = "1";
+		obj[5] = "2";
 	}
 });
 bench('cache-miss-local-unrolled-obj', function(){
 	var obj;
 	for ( i = 0; i < l; i++ ) {
 		obj = arr1[i];
-		obj['0'] = "1";
-		obj['1'] = "2";
-		obj['2'] = "1";
-		obj['3'] = "2";
-		obj['4'] = "1";
-		obj['5'] = "2";
+		obj[0] = "1";
+		obj[1] = "2";
+		obj[2] = "1";
+		obj[3] = "2";
+		obj[4] = "1";
+		obj[5] = "2";
 	}
 });
 bench('cache-miss-array', function(){
