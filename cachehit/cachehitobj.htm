@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+<script src="./cachehitobj.js"></script>
+<script>
+var Type = new FastObj("a b c d e f g h".split(' '), 10000);
+var t1 = Type.new(), t2 = Type.new(), t3 = Type.new();
+
+for ( var i = 0; i < Type.getLength(); i++ ) {
+	Type.get(i).setA('a'+i);
+	Type.get(i).setB('b'+i);
+	Type.get(i).setC('c'+i);
+	Type.get(i).setD('d'+i);
+	Type.get(i).setE('e'+i);
+	Type.get(i).setF('f'+i);
+	Type.get(i).setG('g'+i);
+	Type.get(i).setH('h'+i);
+}
+
+</script>
+</body>
+</html>
