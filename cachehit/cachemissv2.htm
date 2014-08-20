@@ -83,12 +83,12 @@ bench('cache-miss-array', function(){
 
 bench('cache-miss-fastobj', function(){
 	for ( i = 0; i < l; i++ ) {
-		Type.get(i).set0(obj2['1']);
-		Type.get(i).set1(obj2['2']);
-		Type.get(i).set2(obj2['1']);
-		Type.get(i).set3(obj2['2']);
-		Type.get(i).set4(obj2['1']);
-		Type.get(i).set5(obj2['2']);
+		Type.get(i).set0("1");
+		Type.get(i).set1("2");
+		Type.get(i).set2("1");
+		Type.get(i).set3("2");
+		Type.get(i).set4("1");
+		Type.get(i).set5("2");
 	}
 });
 </script>
