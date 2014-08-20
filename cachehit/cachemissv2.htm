@@ -15,46 +15,48 @@ function bench(name, func, prof) {
 	if ( prof ) { console.profileEnd(name);}
 	console.log(name, (new Date())-timer);
 }
-obj1 = {0:"1",1:"1",2:"1",3:"1",4:"1",5:"1"}, arr1 = [], i = 0; l = 100000;
+obj1 = {0:"1",1:"1",2:"1",3:"1",4:"1",5:"1"},  l = 100000, arr1a = new Array(l), arr1b = new Array(l), arr1c = new Array(l), i = 0;
 for ( i = 0; i < l; i++ ) {
-	arr1.push(JSON.parse(JSON.stringify(obj1)));
+	arr1a[i] = JSON.parse(JSON.stringify(obj1));
+	arr1b[i] = JSON.parse(JSON.stringify(obj1));
+	arr1c[i] = JSON.parse(JSON.stringify(obj1));
 }
-obj2 = {0:"1",1:"1",2:"1",3:"1",4:"1",5:"1"}, arr2 = [];
-for ( i = 0; i < l; i++ ) {
-	arr2.push(obj2['0']);
-	arr2.push(obj2['1']);
-	arr2.push(obj2['2']);
-	arr2.push(obj2['3']);
-	arr2.push(obj2['4']);
-	arr2.push(obj2['5']);
+obj2 = {0:"1",1:"1",2:"1",3:"1",4:"1",5:"1"}, arr2 = new Array(l*6);
+for ( i = 0; i < l*6; i+=6 ) {
+	arr2[i] = obj2[0];
+	arr2[i+1] =obj2[1];
+	arr2[i+2]=obj2[2];
+	arr2[i+3]=obj2[3];
+	arr2[i+4]=obj2[4];
+	arr2[i+5]=obj2[5];
 }
-var Type = new FastObj("0 1 2 3 4 5".split(' '), 10000);
+var Type = new FastObj("0 1 2 3 4 5".split(' '), l);
 for ( i = 0; i < l; i++ ) {
 	var t1 = Type.new();
-	t1.set0(obj2['0']);
-	t1.set1(obj2['1']);
-	t1.set2(obj2['2']);
-	t1.set3(obj2['3']);
-	t1.set4(obj2['4']);
-	t1.set5(obj2['5']);
+	t1.set0(obj2[0]);
+	t1.set1(obj2[1]);
+	t1.set2(obj2[2]);
+	t1.set3(obj2[3]);
+	t1.set4(obj2[4]);
+	t1.set5(obj2[5]);
 }
 </script>
 <script>
 bench('cache-miss-obj', function(){
 
 	for ( i = 0; i < l; i++ ) {
-		arr1[i][0] = "1";
-		arr1[i][1] = "2";
-		arr1[i][2] = "1";
-		arr1[i][3] = "2";
-		arr1[i][4] = "1";
-		arr1[i][5] = "2";
+		arr1a[i][0] = "1";
+		arr1a[i][1] = "2";
+		arr1a[i][2] = "1";
+		arr1a[i][3] = "2";
+		arr1a[i][4] = "1";
+		arr1a[i][5] = "2";
 	}
 });
 bench('cache-miss-local-obj', function(){
 
 	for ( i = 0; i < l; i++ ) {
-		var obj = arr1[i];
+		var obj = arr1b[i];
 		obj[0] = "1";
 		obj[1] = "2";
 		obj[2] = "1";
@@ -66,7 +68,7 @@ bench('cache-miss-local-obj', function(){
 bench('cache-miss-local-unrolled-obj', function(){
 	var obj;
 	for ( i = 0; i < l; i++ ) {
-		obj = arr1[i];
+		obj = arr1c[i];
 		obj[0] = "1";
 		obj[1] = "2";
 		obj[2] = "1";
