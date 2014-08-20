@@ -5,19 +5,34 @@
 <body>
 <script src="./cachehitobj.js"></script>
 <script>
-var Type = new FastObj("a b c d e f g h".split(' '), 10000);
-var t1 = Type.new(), t2 = Type.new(), t3 = Type.new();
-
-for ( var i = 0; i < Type.getLength(); i++ ) {
-	Type.get(i).setA('a'+i);
-	Type.get(i).setB('b'+i);
-	Type.get(i).setC('c'+i);
-	Type.get(i).setD('d'+i);
-	Type.get(i).setE('e'+i);
-	Type.get(i).setF('f'+i);
-	Type.get(i).setG('g'+i);
-	Type.get(i).setH('h'+i);
+var l = 100000;
+var obj2 = {0:1,1:1,2:1,3:1,4:1,5:1}
+var Type = new FastObj("0 1 2 3 4 5".split(' '), l);
+for ( i = 0; i < l; i++ ) {
+	var t1 = Type.new();
+	t1.set0(obj2[0]);
+	t1.set1(obj2[1]);
+	t1.set2(obj2[2]);
+	t1.set3(obj2[3]);
+	t1.set4(obj2[4]);
+	t1.set5(obj2[5]);
 }
+
+console.profile("profile");
+(function(){
+	var t1 = Type.get(0);
+for ( i = 0; i < l; i++ ) {
+	
+	t1.set0(1);
+	t1.set1(2);
+	t1.set2(1);
+	t1.set3(2);
+	t1.set4(1);
+	t1.set5(2);
+	t1 = t1.next();
+}
+})();
+console.profileEnd("profile");
 
 </script>
 </body>
