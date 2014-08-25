@@ -3,7 +3,7 @@ function toCamelCase(str) {
 }
 FastObj = function(keys, maxSize) {
 	return (function(){
-		var createIndex = 0, template = [], length=0, padding=2, typeSize = padding+(keys.length*2),arr = new Array(maxSize*typeSize);
+		var createIndex = 0, template = [], length=0, padding=2, typeSize = padding+(keys.length),arr = new Array(maxSize*typeSize);
 		template[0] = undefined;
 		template[1] = false; // used or not
 		for ( var i = 0; i < keys.length; i++ ) {
